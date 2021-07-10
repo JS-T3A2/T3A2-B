@@ -1,0 +1,3 @@
+[submodule "t3a2-b-api"]
+	path = t3a2-b-api
+	url = git@github-js:JS-T3A2/t3a2-b-api.git
