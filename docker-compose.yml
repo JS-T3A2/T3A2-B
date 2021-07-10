@@ -1,0 +1,36 @@
+version: '3'
+services:
+  t3a2-b-router:
+    depends_on:
+      - t3a2-b-api
+      - t3a2-b-client
+      - mongo
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./t3a2-b-router
+    ports:
+      - '3050:80'
+  t3a2-b-api:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./t3a2-b-api
+    env_file: ./.env
+    volumes:
+      - /home/app/node_modules
+      - ./t3a2-b-api:/home/app
+  t3a2-b-client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./t3a2-b-client
+    volumes:
+      - '/home/app/node_modules'
+      - './t3a2-b-client:/home/app'
+  mongo:
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - 'mongodb:/data/db'
+volumes:
+  mongodb:
